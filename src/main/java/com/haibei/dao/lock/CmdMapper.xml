@@ -1,0 +1,428 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.haibei.dao.lock.CmdMapper" >
+  <resultMap id="BaseResultMap" type="com.haibei.pojo.lock.Cmd" >
+    <id column="SEQ_NO" property="seqNo" jdbcType="VARCHAR" />
+    <result column="DEV_IP" property="devIp" jdbcType="VARCHAR" />
+    <result column="DEV_ID" property="devId" jdbcType="VARCHAR" />
+    <result column="CMD_PLAIN" property="cmdPlain" jdbcType="VARCHAR" />
+    <result column="CMD_CIPHER" property="cmdCipher" jdbcType="VARCHAR" />
+    <result column="TIME_CREATE" property="timeCreate" jdbcType="VARCHAR" />
+    <result column="RTN_PLAIN" property="rtnPlain" jdbcType="VARCHAR" />
+    <result column="RTN_CIPHER" property="rtnCipher" jdbcType="VARCHAR" />
+    <result column="TIME_COST" property="timeCost" jdbcType="DECIMAL" />
+    <result column="CMD_FLAG" property="cmdFlag" jdbcType="DECIMAL" />
+    <result column="EVENT_ID" property="eventId" jdbcType="DECIMAL" />
+    <result column="CMD_STATUS" property="cmdStatus" jdbcType="DECIMAL" />
+    <result column="LOCK_ADDR" property="lockAddr" jdbcType="VARCHAR" />
+    <result column="TIME_DOWNLOAD" property="timeDownload" jdbcType="VARCHAR" />
+    <result column="TIME_RETURN" property="timeReturn" jdbcType="VARCHAR" />
+    <result column="LOCK_ID" property="lockId" jdbcType="VARCHAR" />
+    <result column="LOCK_NAME" property="lockName" jdbcType="VARCHAR" />
+    <result column="RTN" property="rtn" jdbcType="VARCHAR" />
+    <result column="LOCK_USER_SEQ" property="lockUserSeq" jdbcType="VARCHAR" />
+    <association property="user" column="LOCK_USER_SEQ" select="com.haibei.dao.lock.LockUserMapper.selectBySq"></association>
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    SEQ_NO, DEV_IP, DEV_ID, CMD_PLAIN, CMD_CIPHER, TIME_CREATE, RTN_PLAIN, RTN_CIPHER, 
+    TIME_COST, CMD_FLAG, EVENT_ID, CMD_STATUS, LOCK_ADDR, TIME_DOWNLOAD, TIME_RETURN, 
+    LOCK_ID, LOCK_NAME, RTN, LOCK_USER_SEQ
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.haibei.pojo.lock.CmdExample" >
+    <include refid="common.Oracle_Pagination_Head" />
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from HAIBEI_LOCK.HAIBEI_CMD_T
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="common.Oracle_Pagination_Tail" />
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from HAIBEI_LOCK.HAIBEI_CMD_T
+    where SEQ_NO = #{seqNo}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from HAIBEI_LOCK.HAIBEI_CMD_T
+    where SEQ_NO = #{seqNo}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.haibei.pojo.lock.CmdExample" >
+    delete from HAIBEI_LOCK.HAIBEI_CMD_T
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.haibei.pojo.lock.Cmd" >
+    insert into HAIBEI_LOCK.HAIBEI_CMD_T (SEQ_NO, DEV_IP, DEV_ID, CMD_PLAIN, CMD_CIPHER, TIME_CREATE, RTN_PLAIN, 
+      RTN_CIPHER, TIME_COST, CMD_FLAG, EVENT_ID, CMD_STATUS, LOCK_ADDR, TIME_DOWNLOAD, 
+      TIME_RETURN, LOCK_ID, LOCK_NAME, RTN, LOCK_USER_SEQ)
+    values (#{seqNo}, #{devIp}, #{devId}, #{cmdPlain}, #{cmdCipher}, #{timeCreate}, #{rtnPlain}, 
+      #{rtnCipher}, #{timeCost}, #{cmdFlag}, #{eventId}, #{cmdStatus}, #{lockAddr}, #{timeDownload}, 
+      #{timeReturn}, #{lockId}, #{lockName}, #{rtn}, #{lockUserSeq})
+  </insert>
+  <insert id="insertSelective" parameterType="com.haibei.pojo.lock.Cmd" >
+    insert into HAIBEI_LOCK.HAIBEI_CMD_T
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="seqNo != null" >
+        SEQ_NO,
+      </if>
+      <if test="devIp != null" >
+        DEV_IP,
+      </if>
+      <if test="devId != null" >
+        DEV_ID,
+      </if>
+      <if test="cmdPlain != null" >
+        CMD_PLAIN,
+      </if>
+      <if test="cmdCipher != null" >
+        CMD_CIPHER,
+      </if>
+      <if test="timeCreate != null" >
+        TIME_CREATE,
+      </if>
+      <if test="rtnPlain != null" >
+        RTN_PLAIN,
+      </if>
+      <if test="rtnCipher != null" >
+        RTN_CIPHER,
+      </if>
+      <if test="timeCost != null" >
+        TIME_COST,
+      </if>
+      <if test="cmdFlag != null" >
+        CMD_FLAG,
+      </if>
+      <if test="eventId != null" >
+        EVENT_ID,
+      </if>
+      <if test="cmdStatus != null" >
+        CMD_STATUS,
+      </if>
+      <if test="lockAddr != null" >
+        LOCK_ADDR,
+      </if>
+      <if test="timeDownload != null" >
+        TIME_DOWNLOAD,
+      </if>
+      <if test="timeReturn != null" >
+        TIME_RETURN,
+      </if>
+      <if test="lockId != null" >
+        LOCK_ID,
+      </if>
+      <if test="lockName != null" >
+        LOCK_NAME,
+      </if>
+      <if test="rtn != null" >
+        RTN,
+      </if>
+      <if test="lockUserSeq != null" >
+        LOCK_USER_SEQ,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="seqNo != null" >
+        #{seqNo},
+      </if>
+      <if test="devIp != null" >
+        #{devIp},
+      </if>
+      <if test="devId != null" >
+        #{devId},
+      </if>
+      <if test="cmdPlain != null" >
+        #{cmdPlain},
+      </if>
+      <if test="cmdCipher != null" >
+        #{cmdCipher},
+      </if>
+      <if test="timeCreate != null" >
+        #{timeCreate},
+      </if>
+      <if test="rtnPlain != null" >
+        #{rtnPlain},
+      </if>
+      <if test="rtnCipher != null" >
+        #{rtnCipher},
+      </if>
+      <if test="timeCost != null" >
+        #{timeCost},
+      </if>
+      <if test="cmdFlag != null" >
+        #{cmdFlag},
+      </if>
+      <if test="eventId != null" >
+        #{eventId},
+      </if>
+      <if test="cmdStatus != null" >
+        #{cmdStatus},
+      </if>
+      <if test="lockAddr != null" >
+        #{lockAddr},
+      </if>
+      <if test="timeDownload != null" >
+        #{timeDownload},
+      </if>
+      <if test="timeReturn != null" >
+        #{timeReturn},
+      </if>
+      <if test="lockId != null" >
+        #{lockId},
+      </if>
+      <if test="lockName != null" >
+        #{lockName},
+      </if>
+      <if test="rtn != null" >
+        #{rtn},
+      </if>
+      <if test="lockUserSeq != null" >
+        #{lockUserSeq},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.haibei.pojo.lock.CmdExample" resultType="java.lang.Integer" >
+    select count(*) from HAIBEI_LOCK.HAIBEI_CMD_T
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update HAIBEI_LOCK.HAIBEI_CMD_T
+    <set >
+      <if test="record.seqNo != null" >
+        SEQ_NO = #{record.seqNo},
+      </if>
+      <if test="record.devIp != null" >
+        DEV_IP = #{record.devIp},
+      </if>
+      <if test="record.devId != null" >
+        DEV_ID = #{record.devId},
+      </if>
+      <if test="record.cmdPlain != null" >
+        CMD_PLAIN = #{record.cmdPlain},
+      </if>
+      <if test="record.cmdCipher != null" >
+        CMD_CIPHER = #{record.cmdCipher},
+      </if>
+      <if test="record.timeCreate != null" >
+        TIME_CREATE = #{record.timeCreate},
+      </if>
+      <if test="record.rtnPlain != null" >
+        RTN_PLAIN = #{record.rtnPlain},
+      </if>
+      <if test="record.rtnCipher != null" >
+        RTN_CIPHER = #{record.rtnCipher},
+      </if>
+      <if test="record.timeCost != null" >
+        TIME_COST = #{record.timeCost},
+      </if>
+      <if test="record.cmdFlag != null" >
+        CMD_FLAG = #{record.cmdFlag},
+      </if>
+      <if test="record.eventId != null" >
+        EVENT_ID = #{record.eventId},
+      </if>
+      <if test="record.cmdStatus != null" >
+        CMD_STATUS = #{record.cmdStatus},
+      </if>
+      <if test="record.lockAddr != null" >
+        LOCK_ADDR = #{record.lockAddr},
+      </if>
+      <if test="record.timeDownload != null" >
+        TIME_DOWNLOAD = #{record.timeDownload},
+      </if>
+      <if test="record.timeReturn != null" >
+        TIME_RETURN = #{record.timeReturn},
+      </if>
+      <if test="record.lockId != null" >
+        LOCK_ID = #{record.lockId},
+      </if>
+      <if test="record.lockName != null" >
+        LOCK_NAME = #{record.lockName},
+      </if>
+      <if test="record.rtn != null" >
+        RTN = #{record.rtn},
+      </if>
+      <if test="record.lockUserSeq != null" >
+        LOCK_USER_SEQ = #{record.lockUserSeq},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update HAIBEI_LOCK.HAIBEI_CMD_T
+    set SEQ_NO = #{record.seqNo},
+      DEV_IP = #{record.devIp},
+      DEV_ID = #{record.devId},
+      CMD_PLAIN = #{record.cmdPlain},
+      CMD_CIPHER = #{record.cmdCipher},
+      TIME_CREATE = #{record.timeCreate},
+      RTN_PLAIN = #{record.rtnPlain},
+      RTN_CIPHER = #{record.rtnCipher},
+      TIME_COST = #{record.timeCost},
+      CMD_FLAG = #{record.cmdFlag},
+      EVENT_ID = #{record.eventId},
+      CMD_STATUS = #{record.cmdStatus},
+      LOCK_ADDR = #{record.lockAddr},
+      TIME_DOWNLOAD = #{record.timeDownload},
+      TIME_RETURN = #{record.timeReturn},
+      LOCK_ID = #{record.lockId},
+      LOCK_NAME = #{record.lockName},
+      RTN = #{record.rtn},
+      LOCK_USER_SEQ = #{record.lockUserSeq}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.haibei.pojo.lock.Cmd" >
+    update HAIBEI_LOCK.HAIBEI_CMD_T
+    <set >
+      <if test="devIp != null" >
+        DEV_IP = #{devIp},
+      </if>
+      <if test="devId != null" >
+        DEV_ID = #{devId},
+      </if>
+      <if test="cmdPlain != null" >
+        CMD_PLAIN = #{cmdPlain},
+      </if>
+      <if test="cmdCipher != null" >
+        CMD_CIPHER = #{cmdCipher},
+      </if>
+      <if test="timeCreate != null" >
+        TIME_CREATE = #{timeCreate},
+      </if>
+      <if test="rtnPlain != null" >
+        RTN_PLAIN = #{rtnPlain},
+      </if>
+      <if test="rtnCipher != null" >
+        RTN_CIPHER = #{rtnCipher},
+      </if>
+      <if test="timeCost != null" >
+        TIME_COST = #{timeCost},
+      </if>
+      <if test="cmdFlag != null" >
+        CMD_FLAG = #{cmdFlag},
+      </if>
+      <if test="eventId != null" >
+        EVENT_ID = #{eventId},
+      </if>
+      <if test="cmdStatus != null" >
+        CMD_STATUS = #{cmdStatus},
+      </if>
+      <if test="lockAddr != null" >
+        LOCK_ADDR = #{lockAddr},
+      </if>
+      <if test="timeDownload != null" >
+        TIME_DOWNLOAD = #{timeDownload},
+      </if>
+      <if test="timeReturn != null" >
+        TIME_RETURN = #{timeReturn},
+      </if>
+      <if test="lockId != null" >
+        LOCK_ID = #{lockId},
+      </if>
+      <if test="lockName != null" >
+        LOCK_NAME = #{lockName},
+      </if>
+      <if test="rtn != null" >
+        RTN = #{rtn},
+      </if>
+      <if test="lockUserSeq != null" >
+        LOCK_USER_SEQ = #{lockUserSeq},
+      </if>
+    </set>
+    where SEQ_NO = #{seqNo}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.haibei.pojo.lock.Cmd" >
+    update HAIBEI_LOCK.HAIBEI_CMD_T
+    set DEV_IP = #{devIp},
+      DEV_ID = #{devId},
+      CMD_PLAIN = #{cmdPlain},
+      CMD_CIPHER = #{cmdCipher},
+      TIME_CREATE = #{timeCreate},
+      RTN_PLAIN = #{rtnPlain},
+      RTN_CIPHER = #{rtnCipher},
+      TIME_COST = #{timeCost},
+      CMD_FLAG = #{cmdFlag},
+      EVENT_ID = #{eventId},
+      CMD_STATUS = #{cmdStatus},
+      LOCK_ADDR = #{lockAddr},
+      TIME_DOWNLOAD = #{timeDownload},
+      TIME_RETURN = #{timeReturn},
+      LOCK_ID = #{lockId},
+      LOCK_NAME = #{lockName},
+      RTN = #{rtn},
+      LOCK_USER_SEQ = #{lockUserSeq}
+    where SEQ_NO = #{seqNo}
+  </update>
+</mapper>

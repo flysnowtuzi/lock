@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.haibei.dao.lock.DeviceMapper" >
+  <resultMap id="BaseResultMap" type="com.haibei.pojo.lock.Device" >
+    <id column="DEV_ID" property="devId" jdbcType="VARCHAR" />
+    <result column="DEV_NAME" property="devName" jdbcType="VARCHAR" />
+    <result column="BUILDING_ID" property="buildingId" jdbcType="VARCHAR" />
+    <result column="BUILDING_NAME" property="buildingName" jdbcType="VARCHAR" />
+    <result column="DEV_STATUS" property="devStatus" jdbcType="DECIMAL" />
+    <result column="DEV_MEMO" property="devMemo" jdbcType="VARCHAR" />
+    <result column="DEV_IP" property="devIp" jdbcType="VARCHAR" />
+    <result column="DEV_TYPE" property="devType" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    DEV_ID, DEV_NAME, BUILDING_ID, BUILDING_NAME, DEV_STATUS, DEV_MEMO, DEV_IP, DEV_TYPE
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.haibei.pojo.lock.DeviceExample" >
+    <include refid="common.Oracle_Pagination_Head" />
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from HAIBEI_LOCK.HAIBEI_DEVICE_T
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="common.Oracle_Pagination_Tail" />
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from HAIBEI_LOCK.HAIBEI_DEVICE_T
+    where DEV_ID = #{devId}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from HAIBEI_LOCK.HAIBEI_DEVICE_T
+    where DEV_ID = #{devId}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.haibei.pojo.lock.DeviceExample" >
+    delete from HAIBEI_LOCK.HAIBEI_DEVICE_T
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.haibei.pojo.lock.Device" >
+    insert into HAIBEI_LOCK.HAIBEI_DEVICE_T (DEV_ID, DEV_NAME, BUILDING_ID, BUILDING_NAME, DEV_STATUS, DEV_MEMO, 
+      DEV_IP, DEV_TYPE)
+    values (#{devId}, #{devName}, #{buildingId}, #{buildingName}, #{devStatus}, #{devMemo}, 
+      #{devIp}, #{devType})
+  </insert>
+  <insert id="insertSelective" parameterType="com.haibei.pojo.lock.Device" >
+    insert into HAIBEI_LOCK.HAIBEI_DEVICE_T
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="devId != null" >
+        DEV_ID,
+      </if>
+      <if test="devName != null" >
+        DEV_NAME,
+      </if>
+      <if test="buildingId != null" >
+        BUILDING_ID,
+      </if>
+      <if test="buildingName != null" >
+        BUILDING_NAME,
+      </if>
+      <if test="devStatus != null" >
+        DEV_STATUS,
+      </if>
+      <if test="devMemo != null" >
+        DEV_MEMO,
+      </if>
+      <if test="devIp != null" >
+        DEV_IP,
+      </if>
+      <if test="devType != null" >
+        DEV_TYPE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="devId != null" >
+        #{devId},
+      </if>
+      <if test="devName != null" >
+        #{devName},
+      </if>
+      <if test="buildingId != null" >
+        #{buildingId},
+      </if>
+      <if test="buildingName != null" >
+        #{buildingName},
+      </if>
+      <if test="devStatus != null" >
+        #{devStatus},
+      </if>
+      <if test="devMemo != null" >
+        #{devMemo},
+      </if>
+      <if test="devIp != null" >
+        #{devIp},
+      </if>
+      <if test="devType != null" >
+        #{devType},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.haibei.pojo.lock.DeviceExample" resultType="java.lang.Integer" >
+    select count(*) from HAIBEI_LOCK.HAIBEI_DEVICE_T
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update HAIBEI_LOCK.HAIBEI_DEVICE_T
+    <set >
+      <if test="record.devId != null" >
+        DEV_ID = #{record.devId},
+      </if>
+      <if test="record.devName != null" >
+        DEV_NAME = #{record.devName},
+      </if>
+      <if test="record.buildingId != null" >
+        BUILDING_ID = #{record.buildingId},
+      </if>
+      <if test="record.buildingName != null" >
+        BUILDING_NAME = #{record.buildingName},
+      </if>
+      <if test="record.devStatus != null" >
+        DEV_STATUS = #{record.devStatus},
+      </if>
+      <if test="record.devMemo != null" >
+        DEV_MEMO = #{record.devMemo},
+      </if>
+      <if test="record.devIp != null" >
+        DEV_IP = #{record.devIp},
+      </if>
+      <if test="record.devType != null" >
+        DEV_TYPE = #{record.devType},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update HAIBEI_LOCK.HAIBEI_DEVICE_T
+    set DEV_ID = #{record.devId},
+      DEV_NAME = #{record.devName},
+      BUILDING_ID = #{record.buildingId},
+      BUILDING_NAME = #{record.buildingName},
+      DEV_STATUS = #{record.devStatus},
+      DEV_MEMO = #{record.devMemo},
+      DEV_IP = #{record.devIp},
+      DEV_TYPE = #{record.devType}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.haibei.pojo.lock.Device" >
+    update HAIBEI_LOCK.HAIBEI_DEVICE_T
+    <set >
+      <if test="devName != null" >
+        DEV_NAME = #{devName},
+      </if>
+      <if test="buildingId != null" >
+        BUILDING_ID = #{buildingId},
+      </if>
+      <if test="buildingName != null" >
+        BUILDING_NAME = #{buildingName},
+      </if>
+      <if test="devStatus != null" >
+        DEV_STATUS = #{devStatus},
+      </if>
+      <if test="devMemo != null" >
+        DEV_MEMO = #{devMemo},
+      </if>
+      <if test="devIp != null" >
+        DEV_IP = #{devIp},
+      </if>
+      <if test="devType != null" >
+        DEV_TYPE = #{devType},
+      </if>
+    </set>
+    where DEV_ID = #{devId}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.haibei.pojo.lock.Device" >
+    update HAIBEI_LOCK.HAIBEI_DEVICE_T
+    set DEV_NAME = #{devName},
+      BUILDING_ID = #{buildingId},
+      BUILDING_NAME = #{buildingName},
+      DEV_STATUS = #{devStatus},
+      DEV_MEMO = #{devMemo},
+      DEV_IP = #{devIp},
+      DEV_TYPE = #{devType}
+    where DEV_ID = #{devId}
+  </update>
+</mapper>

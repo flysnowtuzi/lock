@@ -1,0 +1,216 @@
+@CHARSET "UTF-8";
+/**cs-window样式*/
+.cs-window-windows {
+    position: absolute;
+    z-index:1999;
+    background:#fff;
+/*     border:1px solid #999;*/
+    border-radius:5px; 
+  
+    -webkit-box-shadow: 0 5px 15px rgba(0,0,0,.5); */
+   box-shadow: 0 5px 15px rgba(0,0,0,.5);
+}
+.cs-window-windows .content{
+	  padding:20px;
+	}
+.cs-window-background {
+    background:#ccc;
+    opacity:0.4;
+    filter:progid:DXImageTransform.Microsoft.Alpha(opacity=30);
+    width:100%;
+    height:100%;
+    position:fixed;
+    left:0;
+    top:0;
+}
+body {
+    height:100%;
+}
+.cs-window-loading {
+	position:fixed;
+	top:50%;
+	left:50%;
+	height:100px;
+	width:100px;
+	margin-left:-33px;
+	margin-top:-65px;
+	z-index:1999;   
+	box-sizing:border-box; 
+	-moz-box-sizing:border-box;
+	text-align:center
+}
+.cs-window-img {
+	background:url("../image/loading.gif");
+	width : 100px;
+	height : 100px;
+}
+/**w5c 验证样式*/
+.w5c-form input:focus:focus,
+.w5c-form textarea:focus:focus,
+.w5c-form select:focus:focus {
+  border-color: rgba(82, 168, 236, 0.8);
+  outline: 0;
+  outline: thin dotted \9;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
+  color: #000000;
+}
+.w5c-form input:focus:focus.error,
+.w5c-form textarea:focus:focus.error,
+.w5c-form select:focus:focus.error {
+  border-color: #b94a48;
+  -webkit-box-shadow: 0 0 6px #f8b9b7;
+  -moz-box-shadow: 0 0 6px #f8b9b7;
+  box-shadow: 0 0 6px #f8b9b7;
+}
+.w5c-form input.error,
+.w5c-form textarea.error,
+.w5c-form select.error {
+  border-color: #b94a48;
+  -webkit-box-shadow: 0 0 6px #f8b9b7;
+  -moz-box-shadow: 0 0 6px #f8b9b7;
+  box-shadow: 0 0 6px #f8b9b7;
+}
+.w5c-form .dropdown-menu {
+  max-height: 400px;
+  overflow-y: auto;
+}
+.w5c-form .alert {
+  margin-bottom: 0px;
+}
+.w5c-form .w5c-error {
+  color: #b94a48;
+  display: block;
+  margin-top: 5px;
+}
+textarea {
+  width: 400px;
+  height: 300px;
+  font-size: 12px;
+}
+
+.dialog-windows-pt-body {
+    width:500px;
+    height:275px;
+    box-shadow:2px 2px 10px #999;
+    border-radius:10px;
+    position:fixed;
+    background:#ebf4f8;
+    z-index:100000;
+    box-sizing: border-box;
+    padding-top: 25px;
+    font:normal 12px microsoft yahei, Arial, Helvetica, sans-serif;
+}
+.dialog-windows-pt-close {
+    position:absolute;
+    top:10px;
+    right:10px;
+    background:url(../image/dialog/close.png) 0 0 no-repeat;
+    width:25px;
+    height:25px;
+}
+.dialog-windows-pt-img {
+    padding-top:135px;
+    text-align:center;
+    color:#888;
+    font-size:18px;
+}
+.dialog-windows-pt-button {
+    height:55px;
+    text-align:center;
+    font-size:18px;
+    color:#fff;
+    position:absolute;
+    left:0;
+    bottom:0;
+    border-radius:0px 0px 10px 10px;
+    line-height:55px;
+    width:100%;
+    overflow:hidden;
+}
+.dialog-windows-pt-span {
+    display:inline-block;
+    width:50%;
+}
+.dialog-windows-pt-list {
+    background:url(../image/dialog/list.png) left center no-repeat
+}
+/*操作有误*/
+.dialog-windows-pt-close-red:hover {
+    background:url(../image/dialog/close-red.png) 0 0 no-repeat;
+    cursor:pointer;
+}
+.dialog-windows-pt-img-red {
+    background:url(../image/dialog/error.png) center top no-repeat;
+}
+.dialog-windows-pt-button-red {
+    background-color:#d1322e;
+}
+.dialog-windows-pt-button-red:hover {
+    cursor:pointer;
+    background-color:#d55350
+}
+/*操作有误*/
+/*没有权限*/
+.dialog-windows-pt-close-orange:hover {
+    background:url(../image/dialog/close-orange.png) 0 0 no-repeat;
+    cursor:pointer;
+}
+.dialog-windows-pt-img-orange {
+    background:url(../image/dialog/important.png) center top no-repeat;
+}
+.dialog-windows-pt-button-orange {
+    background-color:#f76707;
+}
+.dialog-windows-pt-button-orange:hover {
+    cursor:pointer;
+    background-color:#f58337
+}
+/*没有权限*/
+/*数据补充*/
+.dialog-windows-pt-close-green:hover {
+    background:url(../image/dialog/close-green.png) 0 0 no-repeat;
+    cursor:pointer;
+}
+.dialog-windows-pt-img-green {
+    background:url(../image/dialog/about.png) center top no-repeat;
+}
+.dialog-windows-pt-button-green {
+    background:#3b5d5e;
+}
+.dialog-windows-pt-button-green:hover {
+    cursor:pointer;
+    background-color:#436667
+}
+/*数据补充*/
+/*确认*/
+.dialog-windows-pt-close-blue:hover {
+    background:url(../image/dialog/close-blue.png) 0 0 no-repeat;
+    cursor:pointer;
+}
+.dialog-windows-pt-img-blue {
+    background:url(../image/dialog/question.png) center top no-repeat;
+}
+.dialog-windows-pt-button-blue {
+    background-color:#06acf9;
+}
+.dialog-windows-pt-button-blue:hover {
+    cursor:pointer;
+    background-color:#1fb4f9
+}
+/*确认*/
+/*注册成功*/
+.dialog-windows-pt-close-qing:hover {
+	background:url(../image/dialog/close-qing.png) 0 0 no-repeat;
+	cursor:pointer;
+}
+.dialog-windows-pt-img-qing {
+	background:url(../image/dialog/success.png) center top no-repeat;
+}
+.dialog-windows-pt-button-qing {
+	background-color:#00a67d;
+}
+.dialog-windows-pt-button-qing:hover {
+	cursor:pointer;
+	background-color:#1aaf8b
+}

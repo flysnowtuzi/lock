@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.haibei.dao.lock.WaterMapper" >
+  <resultMap id="BaseResultMap" type="com.haibei.pojo.lock.Water" >
+    <id column="SEQ_NO" property="seqNo" jdbcType="DECIMAL" />
+    <result column="DEV_ID" property="devId" jdbcType="VARCHAR" />
+    <result column="DEV_NAME" property="devName" jdbcType="VARCHAR" />
+    <result column="LOCK_ID" property="lockId" jdbcType="VARCHAR" />
+    <result column="LOCK_NAME" property="lockName" jdbcType="VARCHAR" />
+    <result column="EVENT_ID" property="eventId" jdbcType="DECIMAL" />
+    <result column="EVENT_NAME" property="eventName" jdbcType="VARCHAR" />
+    <result column="CARD_PHYID" property="cardPhyid" jdbcType="VARCHAR" />
+    <result column="TIME_CREATE" property="timeCreate" jdbcType="VARCHAR" />
+    <result column="TIME_RETURN" property="timeReturn" jdbcType="VARCHAR" />
+    <result column="USER_ID" property="userId" jdbcType="VARCHAR" />
+    <result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
+    <result column="DEPT_ID" property="deptId" jdbcType="VARCHAR" />
+    <result column="DEPT_NAME" property="deptName" jdbcType="VARCHAR" />
+    <result column="RTN_FLAG" property="rtnFlag" jdbcType="DECIMAL" />
+    <result column="RTN_DATA" property="rtnData" jdbcType="VARCHAR" />
+    <result column="RTN_JSON" property="rtnJson" jdbcType="VARCHAR" />
+    <result column="CMD_NO" property="cmdNo" jdbcType="VARCHAR" />
+    <association property="cmd" column="CMD_NO" select="com.haibei.dao.lock.CmdMapper.selectByPrimaryKey"></association>
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    SEQ_NO, DEV_ID, DEV_NAME, LOCK_ID, LOCK_NAME, EVENT_ID, EVENT_NAME, CARD_PHYID, TIME_CREATE, 
+    TIME_RETURN, USER_ID, USER_NAME, DEPT_ID, DEPT_NAME, RTN_FLAG, RTN_DATA, RTN_JSON, 
+    CMD_NO
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.haibei.pojo.lock.WaterExample" >
+    <include refid="common.Oracle_Pagination_Head" />
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from HAIBEI_LOCK.HAIBEI_WATER_T
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="common.Oracle_Pagination_Tail" />
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from HAIBEI_LOCK.HAIBEI_WATER_T
+    where SEQ_NO = #{seqNo}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from HAIBEI_LOCK.HAIBEI_WATER_T
+    where SEQ_NO = #{seqNo}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.haibei.pojo.lock.WaterExample" >
+    delete from HAIBEI_LOCK.HAIBEI_WATER_T
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.haibei.pojo.lock.Water" >
+    insert into HAIBEI_LOCK.HAIBEI_WATER_T (SEQ_NO, DEV_ID, DEV_NAME, LOCK_ID, LOCK_NAME, EVENT_ID, EVENT_NAME, 
+      CARD_PHYID, TIME_CREATE, TIME_RETURN, USER_ID, USER_NAME, DEPT_ID, 
+      DEPT_NAME, RTN_FLAG, RTN_DATA, RTN_JSON, CMD_NO)
+    values (#{seqNo}, #{devId}, #{devName}, #{lockId}, #{lockName}, #{eventId}, #{eventName}, 
+      #{cardPhyid}, #{timeCreate}, #{timeReturn}, #{userId}, #{userName}, #{deptId}, 
+      #{deptName}, #{rtnFlag}, #{rtnData}, #{rtnJson}, #{cmdNo})
+  </insert>
+  <insert id="insertSelective" parameterType="com.haibei.pojo.lock.Water" >
+    insert into HAIBEI_LOCK.HAIBEI_WATER_T
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="seqNo != null" >
+        SEQ_NO,
+      </if>
+      <if test="devId != null" >
+        DEV_ID,
+      </if>
+      <if test="devName != null" >
+        DEV_NAME,
+      </if>
+      <if test="lockId != null" >
+        LOCK_ID,
+      </if>
+      <if test="lockName != null" >
+        LOCK_NAME,
+      </if>
+      <if test="eventId != null" >
+        EVENT_ID,
+      </if>
+      <if test="eventName != null" >
+        EVENT_NAME,
+      </if>
+      <if test="cardPhyid != null" >
+        CARD_PHYID,
+      </if>
+      <if test="timeCreate != null" >
+        TIME_CREATE,
+      </if>
+      <if test="timeReturn != null" >
+        TIME_RETURN,
+      </if>
+      <if test="userId != null" >
+        USER_ID,
+      </if>
+      <if test="userName != null" >
+        USER_NAME,
+      </if>
+      <if test="deptId != null" >
+        DEPT_ID,
+      </if>
+      <if test="deptName != null" >
+        DEPT_NAME,
+      </if>
+      <if test="rtnFlag != null" >
+        RTN_FLAG,
+      </if>
+      <if test="rtnData != null" >
+        RTN_DATA,
+      </if>
+      <if test="rtnJson != null" >
+        RTN_JSON,
+      </if>
+      <if test="cmdNo != null" >
+        CMD_NO,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="seqNo != null" >
+        #{seqNo},
+      </if>
+      <if test="devId != null" >
+        #{devId},
+      </if>
+      <if test="devName != null" >
+        #{devName},
+      </if>
+      <if test="lockId != null" >
+        #{lockId},
+      </if>
+      <if test="lockName != null" >
+        #{lockName},
+      </if>
+      <if test="eventId != null" >
+        #{eventId},
+      </if>
+      <if test="eventName != null" >
+        #{eventName},
+      </if>
+      <if test="cardPhyid != null" >
+        #{cardPhyid},
+      </if>
+      <if test="timeCreate != null" >
+        #{timeCreate},
+      </if>
+      <if test="timeReturn != null" >
+        #{timeReturn},
+      </if>
+      <if test="userId != null" >
+        #{userId},
+      </if>
+      <if test="userName != null" >
+        #{userName},
+      </if>
+      <if test="deptId != null" >
+        #{deptId},
+      </if>
+      <if test="deptName != null" >
+        #{deptName},
+      </if>
+      <if test="rtnFlag != null" >
+        #{rtnFlag},
+      </if>
+      <if test="rtnData != null" >
+        #{rtnData},
+      </if>
+      <if test="rtnJson != null" >
+        #{rtnJson},
+      </if>
+      <if test="cmdNo != null" >
+        #{cmdNo},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.haibei.pojo.lock.WaterExample" resultType="java.lang.Integer" >
+    select count(*) from HAIBEI_LOCK.HAIBEI_WATER_T
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update HAIBEI_LOCK.HAIBEI_WATER_T
+    <set >
+      <if test="record.seqNo != null" >
+        SEQ_NO = #{record.seqNo},
+      </if>
+      <if test="record.devId != null" >
+        DEV_ID = #{record.devId},
+      </if>
+      <if test="record.devName != null" >
+        DEV_NAME = #{record.devName},
+      </if>
+      <if test="record.lockId != null" >
+        LOCK_ID = #{record.lockId},
+      </if>
+      <if test="record.lockName != null" >
+        LOCK_NAME = #{record.lockName},
+      </if>
+      <if test="record.eventId != null" >
+        EVENT_ID = #{record.eventId},
+      </if>
+      <if test="record.eventName != null" >
+        EVENT_NAME = #{record.eventName},
+      </if>
+      <if test="record.cardPhyid != null" >
+        CARD_PHYID = #{record.cardPhyid},
+      </if>
+      <if test="record.timeCreate != null" >
+        TIME_CREATE = #{record.timeCreate},
+      </if>
+      <if test="record.timeReturn != null" >
+        TIME_RETURN = #{record.timeReturn},
+      </if>
+      <if test="record.userId != null" >
+        USER_ID = #{record.userId},
+      </if>
+      <if test="record.userName != null" >
+        USER_NAME = #{record.userName},
+      </if>
+      <if test="record.deptId != null" >
+        DEPT_ID = #{record.deptId},
+      </if>
+      <if test="record.deptName != null" >
+        DEPT_NAME = #{record.deptName},
+      </if>
+      <if test="record.rtnFlag != null" >
+        RTN_FLAG = #{record.rtnFlag},
+      </if>
+      <if test="record.rtnData != null" >
+        RTN_DATA = #{record.rtnData},
+      </if>
+      <if test="record.rtnJson != null" >
+        RTN_JSON = #{record.rtnJson},
+      </if>
+      <if test="record.cmdNo != null" >
+        CMD_NO = #{record.cmdNo},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update HAIBEI_LOCK.HAIBEI_WATER_T
+    set SEQ_NO = #{record.seqNo},
+      DEV_ID = #{record.devId},
+      DEV_NAME = #{record.devName},
+      LOCK_ID = #{record.lockId},
+      LOCK_NAME = #{record.lockName},
+      EVENT_ID = #{record.eventId},
+      EVENT_NAME = #{record.eventName},
+      CARD_PHYID = #{record.cardPhyid},
+      TIME_CREATE = #{record.timeCreate},
+      TIME_RETURN = #{record.timeReturn},
+      USER_ID = #{record.userId},
+      USER_NAME = #{record.userName},
+      DEPT_ID = #{record.deptId},
+      DEPT_NAME = #{record.deptName},
+      RTN_FLAG = #{record.rtnFlag},
+      RTN_DATA = #{record.rtnData},
+      RTN_JSON = #{record.rtnJson},
+      CMD_NO = #{record.cmdNo}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.haibei.pojo.lock.Water" >
+    update HAIBEI_LOCK.HAIBEI_WATER_T
+    <set >
+      <if test="devId != null" >
+        DEV_ID = #{devId},
+      </if>
+      <if test="devName != null" >
+        DEV_NAME = #{devName},
+      </if>
+      <if test="lockId != null" >
+        LOCK_ID = #{lockId},
+      </if>
+      <if test="lockName != null" >
+        LOCK_NAME = #{lockName},
+      </if>
+      <if test="eventId != null" >
+        EVENT_ID = #{eventId},
+      </if>
+      <if test="eventName != null" >
+        EVENT_NAME = #{eventName},
+      </if>
+      <if test="cardPhyid != null" >
+        CARD_PHYID = #{cardPhyid},
+      </if>
+      <if test="timeCreate != null" >
+        TIME_CREATE = #{timeCreate},
+      </if>
+      <if test="timeReturn != null" >
+        TIME_RETURN = #{timeReturn},
+      </if>
+      <if test="userId != null" >
+        USER_ID = #{userId},
+      </if>
+      <if test="userName != null" >
+        USER_NAME = #{userName},
+      </if>
+      <if test="deptId != null" >
+        DEPT_ID = #{deptId},
+      </if>
+      <if test="deptName != null" >
+        DEPT_NAME = #{deptName},
+      </if>
+      <if test="rtnFlag != null" >
+        RTN_FLAG = #{rtnFlag},
+      </if>
+      <if test="rtnData != null" >
+        RTN_DATA = #{rtnData},
+      </if>
+      <if test="rtnJson != null" >
+        RTN_JSON = #{rtnJson},
+      </if>
+      <if test="cmdNo != null" >
+        CMD_NO = #{cmdNo},
+      </if>
+    </set>
+    where SEQ_NO = #{seqNo}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.haibei.pojo.lock.Water" >
+    update HAIBEI_LOCK.HAIBEI_WATER_T
+    set DEV_ID = #{devId},
+      DEV_NAME = #{devName},
+      LOCK_ID = #{lockId},
+      LOCK_NAME = #{lockName},
+      EVENT_ID = #{eventId},
+      EVENT_NAME = #{eventName},
+      CARD_PHYID = #{cardPhyid},
+      TIME_CREATE = #{timeCreate},
+      TIME_RETURN = #{timeReturn},
+      USER_ID = #{userId},
+      USER_NAME = #{userName},
+      DEPT_ID = #{deptId},
+      DEPT_NAME = #{deptName},
+      RTN_FLAG = #{rtnFlag},
+      RTN_DATA = #{rtnData},
+      RTN_JSON = #{rtnJson},
+      CMD_NO = #{cmdNo}
+    where SEQ_NO = #{seqNo}
+  </update>
+</mapper>

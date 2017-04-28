@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.haibei.dao.sys.CodeMapper" >
+  <resultMap id="BaseResultMap" type="com.haibei.pojo.sys.Code" >
+    <id column="CODE_ID" property="codeId" jdbcType="DECIMAL" />
+    <result column="CODE_NAME" property="codeName" jdbcType="VARCHAR" />
+    <result column="CODE_DESCRIBING" property="codeDescribing" jdbcType="VARCHAR" />
+    <result column="CODE_ORDER" property="codeOrder" jdbcType="VARCHAR" />
+    <result column="CODE_PARENT_NO" property="codeParentNo" jdbcType="VARCHAR" />
+    <result column="CODE_NO" property="codeNo" jdbcType="VARCHAR" />
+    <result column="CODE_TYPE" property="codeType" jdbcType="VARCHAR" />
+    <result column="CREATED_BY" property="createdBy" jdbcType="DECIMAL" />
+    <result column="CREATION_TIME" property="creationTime" jdbcType="TIMESTAMP" />
+    <result column="MODIFIED_BY" property="modifiedBy" jdbcType="DECIMAL" />
+    <result column="MODIFICATION_TIME" property="modificationTime" jdbcType="TIMESTAMP" />
+    <result column="DELETE_STATUS" property="deleteStatus" jdbcType="VARCHAR" />
+    <result column="TABLE_VER" property="tableVer" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    CODE_ID, CODE_NAME, CODE_DESCRIBING, CODE_ORDER, CODE_PARENT_NO, CODE_NO, CODE_TYPE, 
+    CREATED_BY, CREATION_TIME, MODIFIED_BY, MODIFICATION_TIME, DELETE_STATUS, TABLE_VER
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.haibei.pojo.sys.CodeExample" >
+    <include refid="common.Oracle_Pagination_Head" />
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from SYS_CODE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="common.Oracle_Pagination_Tail" />
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from SYS_CODE
+    where CODE_ID = #{codeId}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from SYS_CODE
+    where CODE_ID = #{codeId}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.haibei.pojo.sys.CodeExample" >
+    delete from SYS_CODE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.haibei.pojo.sys.Code" >
+    insert into SYS_CODE (CODE_ID, CODE_NAME, CODE_DESCRIBING, CODE_ORDER, CODE_PARENT_NO, 
+      CODE_NO, CODE_TYPE, CREATED_BY, CREATION_TIME, MODIFIED_BY, MODIFICATION_TIME, 
+      DELETE_STATUS, TABLE_VER)
+    values (#{codeId}, #{codeName}, #{codeDescribing}, #{codeOrder}, #{codeParentNo}, 
+      #{codeNo}, #{codeType}, #{createdBy}, #{creationTime}, #{modifiedBy}, #{modificationTime}, 
+      #{deleteStatus}, #{tableVer})
+  </insert>
+  <insert id="insertSelective" parameterType="com.haibei.pojo.sys.Code" >
+    insert into SYS_CODE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="codeId != null" >
+        CODE_ID,
+      </if>
+      <if test="codeName != null" >
+        CODE_NAME,
+      </if>
+      <if test="codeDescribing != null" >
+        CODE_DESCRIBING,
+      </if>
+      <if test="codeOrder != null" >
+        CODE_ORDER,
+      </if>
+      <if test="codeParentNo != null" >
+        CODE_PARENT_NO,
+      </if>
+      <if test="codeNo != null" >
+        CODE_NO,
+      </if>
+      <if test="codeType != null" >
+        CODE_TYPE,
+      </if>
+      <if test="createdBy != null" >
+        CREATED_BY,
+      </if>
+      <if test="creationTime != null" >
+        CREATION_TIME,
+      </if>
+      <if test="modifiedBy != null" >
+        MODIFIED_BY,
+      </if>
+      <if test="modificationTime != null" >
+        MODIFICATION_TIME,
+      </if>
+      <if test="deleteStatus != null" >
+        DELETE_STATUS,
+      </if>
+      <if test="tableVer != null" >
+        TABLE_VER,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="codeId != null" >
+        #{codeId},
+      </if>
+      <if test="codeName != null" >
+        #{codeName},
+      </if>
+      <if test="codeDescribing != null" >
+        #{codeDescribing},
+      </if>
+      <if test="codeOrder != null" >
+        #{codeOrder},
+      </if>
+      <if test="codeParentNo != null" >
+        #{codeParentNo},
+      </if>
+      <if test="codeNo != null" >
+        #{codeNo},
+      </if>
+      <if test="codeType != null" >
+        #{codeType},
+      </if>
+      <if test="createdBy != null" >
+        #{createdBy},
+      </if>
+      <if test="creationTime != null" >
+        #{creationTime},
+      </if>
+      <if test="modifiedBy != null" >
+        #{modifiedBy},
+      </if>
+      <if test="modificationTime != null" >
+        #{modificationTime},
+      </if>
+      <if test="deleteStatus != null" >
+        #{deleteStatus},
+      </if>
+      <if test="tableVer != null" >
+        #{tableVer},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.haibei.pojo.sys.CodeExample" resultType="java.lang.Integer" >
+    select count(*) from SYS_CODE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update SYS_CODE
+    <set >
+      <if test="record.codeId != null" >
+        CODE_ID = #{record.codeId},
+      </if>
+      <if test="record.codeName != null" >
+        CODE_NAME = #{record.codeName},
+      </if>
+      <if test="record.codeDescribing != null" >
+        CODE_DESCRIBING = #{record.codeDescribing},
+      </if>
+      <if test="record.codeOrder != null" >
+        CODE_ORDER = #{record.codeOrder},
+      </if>
+      <if test="record.codeParentNo != null" >
+        CODE_PARENT_NO = #{record.codeParentNo},
+      </if>
+      <if test="record.codeNo != null" >
+        CODE_NO = #{record.codeNo},
+      </if>
+      <if test="record.codeType != null" >
+        CODE_TYPE = #{record.codeType},
+      </if>
+      <if test="record.createdBy != null" >
+        CREATED_BY = #{record.createdBy},
+      </if>
+      <if test="record.creationTime != null" >
+        CREATION_TIME = #{record.creationTime},
+      </if>
+      <if test="record.modifiedBy != null" >
+        MODIFIED_BY = #{record.modifiedBy},
+      </if>
+      <if test="record.modificationTime != null" >
+        MODIFICATION_TIME = #{record.modificationTime},
+      </if>
+      <if test="record.deleteStatus != null" >
+        DELETE_STATUS = #{record.deleteStatus},
+      </if>
+      <if test="record.tableVer != null" >
+        TABLE_VER = #{record.tableVer},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update SYS_CODE
+    set CODE_ID = #{record.codeId},
+      CODE_NAME = #{record.codeName},
+      CODE_DESCRIBING = #{record.codeDescribing},
+      CODE_ORDER = #{record.codeOrder},
+      CODE_PARENT_NO = #{record.codeParentNo},
+      CODE_NO = #{record.codeNo},
+      CODE_TYPE = #{record.codeType},
+      CREATED_BY = #{record.createdBy},
+      CREATION_TIME = #{record.creationTime},
+      MODIFIED_BY = #{record.modifiedBy},
+      MODIFICATION_TIME = #{record.modificationTime},
+      DELETE_STATUS = #{record.deleteStatus},
+      TABLE_VER = #{record.tableVer}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.haibei.pojo.sys.Code" >
+    update SYS_CODE
+    <set >
+      <if test="codeName != null" >
+        CODE_NAME = #{codeName},
+      </if>
+      <if test="codeDescribing != null" >
+        CODE_DESCRIBING = #{codeDescribing},
+      </if>
+      <if test="codeOrder != null" >
+        CODE_ORDER = #{codeOrder},
+      </if>
+      <if test="codeParentNo != null" >
+        CODE_PARENT_NO = #{codeParentNo},
+      </if>
+      <if test="codeNo != null" >
+        CODE_NO = #{codeNo},
+      </if>
+      <if test="codeType != null" >
+        CODE_TYPE = #{codeType},
+      </if>
+      <if test="createdBy != null" >
+        CREATED_BY = #{createdBy},
+      </if>
+      <if test="creationTime != null" >
+        CREATION_TIME = #{creationTime},
+      </if>
+      <if test="modifiedBy != null" >
+        MODIFIED_BY = #{modifiedBy},
+      </if>
+      <if test="modificationTime != null" >
+        MODIFICATION_TIME = #{modificationTime},
+      </if>
+      <if test="deleteStatus != null" >
+        DELETE_STATUS = #{deleteStatus},
+      </if>
+      <if test="tableVer != null" >
+        TABLE_VER = TABLE_VER+1,
+      </if>
+    </set>
+    where CODE_ID = #{codeId} 
+     <if test="tableVer != null" >
+         and  TABLE_VER = #{tableVer}
+     </if>
+   
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.haibei.pojo.sys.Code" >
+    update SYS_CODE
+    set CODE_NAME = #{codeName},
+      CODE_DESCRIBING = #{codeDescribing},
+      CODE_ORDER = #{codeOrder},
+      CODE_PARENT_NO = #{codeParentNo},
+      CODE_NO = #{codeNo},
+      CODE_TYPE = #{codeType},
+      CREATED_BY = #{createdBy},
+      CREATION_TIME = #{creationTime},
+      MODIFIED_BY = #{modifiedBy},
+      MODIFICATION_TIME = #{modificationTime},
+      DELETE_STATUS = #{deleteStatus},
+      TABLE_VER = #{tableVer}
+    where CODE_ID = #{codeId}
+  </update>
+</mapper>

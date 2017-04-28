@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="30 seconds" debug="true">
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">   
+    <!-- encoder 默认配置为PatternLayoutEncoder -->   
+	    <encoder>   
+	      <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>   
+	    </encoder>   
+    </appender>   
+    <appender name="DB" class="ch.qos.logback.classic.db.DBAppender">
+	    <connectionSource class="ch.qos.logback.core.db.DriverManagerConnectionSource">
+		      <driverClass>oracle.jdbc.driver.OracleDriver</driverClass>
+		      <url>jdbc:oracle:thin:@202.118.83.196:1521:ecardb</url>
+		      <user>haibei_lock</user>
+		      <password>elock4haibei#DLMU</password>
+	    </connectionSource>
+    </appender>
+  
+	<root level="INFO" >
+	  <appender-ref ref="DB" />
+	</root>
+     
+	<root level="INFO">             
+        <appender-ref ref="STDOUT" />   
+	</root>     
+</configuration>

@@ -1,0 +1,357 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.haibei.dao.lock.LockUserMapper" >
+  <resultMap id="BaseResultMap" type="com.haibei.pojo.lock.LockUser" >
+    <id column="CARD_PHYID" property="cardPhyid" jdbcType="VARCHAR" />
+    <id column="LOCK_ID" property="lockId" jdbcType="VARCHAR" />
+    <id column="OPEN_TYPE" property="openType" jdbcType="DECIMAL" />
+    <id column="USER_ID" property="userId" jdbcType="VARCHAR" />
+    <result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
+    <result column="LOCK_USER_ADDR" property="lockUserAddr" jdbcType="DECIMAL" />
+    <result column="LOCK_USER_STATUS" property="lockUserStatus" jdbcType="DECIMAL" />
+    <result column="LOCK_USER_MEMO" property="lockUserMemo" jdbcType="VARCHAR" />
+    <result column="LAST_UPDATE" property="lastUpdate" jdbcType="VARCHAR" />
+    <result column="VALID_FROM" property="validFrom" jdbcType="VARCHAR" />
+    <result column="VALID_TO" property="validTo" jdbcType="VARCHAR" />
+    <result column="DEPT_ID" property="deptId" jdbcType="VARCHAR" />
+    <result column="DEPT_NAME" property="deptName" jdbcType="VARCHAR" />
+    <result column="SEQ_NO" property="seqNo" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    CARD_PHYID, LOCK_ID, OPEN_TYPE, USER_ID, USER_NAME, LOCK_USER_ADDR, LOCK_USER_STATUS, 
+    LOCK_USER_MEMO, LAST_UPDATE, VALID_FROM, VALID_TO, DEPT_ID, DEPT_NAME, SEQ_NO
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.haibei.pojo.lock.LockUserExample" >
+    <include refid="common.Oracle_Pagination_Head" />
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from HAIBEI_LOCK.HAIBEI_LOCK_USER_T
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="common.Oracle_Pagination_Tail" />
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.haibei.pojo.lock.LockUserKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from HAIBEI_LOCK.HAIBEI_LOCK_USER_T
+    where CARD_PHYID = #{cardPhyid}
+      and LOCK_ID = #{lockId}
+      and OPEN_TYPE = #{openType}
+      and USER_ID = #{userId}
+  </select>
+  <select id="selectBySq" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from HAIBEI_LOCK.HAIBEI_LOCK_USER_T
+    where SEQ_NO = #{seqNo}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.haibei.pojo.lock.LockUserKey" >
+    delete from HAIBEI_LOCK.HAIBEI_LOCK_USER_T
+    where CARD_PHYID = #{cardPhyid}
+      and LOCK_ID = #{lockId}
+      and OPEN_TYPE = #{openType}
+      and USER_ID = #{userId}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.haibei.pojo.lock.LockUserExample" >
+    delete from HAIBEI_LOCK.HAIBEI_LOCK_USER_T
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.haibei.pojo.lock.LockUser" >
+    insert into HAIBEI_LOCK.HAIBEI_LOCK_USER_T (CARD_PHYID, LOCK_ID, OPEN_TYPE, USER_ID, USER_NAME, LOCK_USER_ADDR, 
+      LOCK_USER_STATUS, LOCK_USER_MEMO, LAST_UPDATE, VALID_FROM, VALID_TO, DEPT_ID, 
+      DEPT_NAME, SEQ_NO)
+    values (#{cardPhyid}, #{lockId}, #{openType}, #{userId}, #{userName}, #{lockUserAddr}, 
+      #{lockUserStatus}, #{lockUserMemo}, #{lastUpdate}, #{validFrom}, #{validTo}, #{deptId}, 
+      #{deptName}, #{seqNo})
+  </insert>
+  <insert id="insertSelective" parameterType="com.haibei.pojo.lock.LockUser" >
+    insert into HAIBEI_LOCK.HAIBEI_LOCK_USER_T
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cardPhyid != null" >
+        CARD_PHYID,
+      </if>
+      <if test="lockId != null" >
+        LOCK_ID,
+      </if>
+      <if test="openType != null" >
+        OPEN_TYPE,
+      </if>
+      <if test="userId != null" >
+        USER_ID,
+      </if>
+      <if test="userName != null" >
+        USER_NAME,
+      </if>
+      <if test="lockUserAddr != null" >
+        LOCK_USER_ADDR,
+      </if>
+      <if test="lockUserStatus != null" >
+        LOCK_USER_STATUS,
+      </if>
+      <if test="lockUserMemo != null" >
+        LOCK_USER_MEMO,
+      </if>
+      <if test="lastUpdate != null" >
+        LAST_UPDATE,
+      </if>
+      <if test="validFrom != null" >
+        VALID_FROM,
+      </if>
+      <if test="validTo != null" >
+        VALID_TO,
+      </if>
+      <if test="deptId != null" >
+        DEPT_ID,
+      </if>
+      <if test="deptName != null" >
+        DEPT_NAME,
+      </if>
+      <if test="seqNo != null" >
+        SEQ_NO,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cardPhyid != null" >
+        #{cardPhyid},
+      </if>
+      <if test="lockId != null" >
+        #{lockId},
+      </if>
+      <if test="openType != null" >
+        #{openType},
+      </if>
+      <if test="userId != null" >
+        #{userId},
+      </if>
+      <if test="userName != null" >
+        #{userName},
+      </if>
+      <if test="lockUserAddr != null" >
+        #{lockUserAddr},
+      </if>
+      <if test="lockUserStatus != null" >
+        #{lockUserStatus},
+      </if>
+      <if test="lockUserMemo != null" >
+        #{lockUserMemo},
+      </if>
+      <if test="lastUpdate != null" >
+        #{lastUpdate},
+      </if>
+      <if test="validFrom != null" >
+        #{validFrom},
+      </if>
+      <if test="validTo != null" >
+        #{validTo},
+      </if>
+      <if test="deptId != null" >
+        #{deptId},
+      </if>
+      <if test="deptName != null" >
+        #{deptName},
+      </if>
+      <if test="seqNo != null" >
+        #{seqNo},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.haibei.pojo.lock.LockUserExample" resultType="java.lang.Integer" >
+    select count(*) from HAIBEI_LOCK.HAIBEI_LOCK_USER_T
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update HAIBEI_LOCK.HAIBEI_LOCK_USER_T
+    <set >
+      <if test="record.cardPhyid != null" >
+        CARD_PHYID = #{record.cardPhyid},
+      </if>
+      <if test="record.lockId != null" >
+        LOCK_ID = #{record.lockId},
+      </if>
+      <if test="record.openType != null" >
+        OPEN_TYPE = #{record.openType},
+      </if>
+      <if test="record.userId != null" >
+        USER_ID = #{record.userId},
+      </if>
+      <if test="record.userName != null" >
+        USER_NAME = #{record.userName},
+      </if>
+      <if test="record.lockUserAddr != null" >
+        LOCK_USER_ADDR = #{record.lockUserAddr},
+      </if>
+      <if test="record.lockUserStatus != null" >
+        LOCK_USER_STATUS = #{record.lockUserStatus},
+      </if>
+      <if test="record.lockUserMemo != null" >
+        LOCK_USER_MEMO = #{record.lockUserMemo},
+      </if>
+      <if test="record.lastUpdate != null" >
+        LAST_UPDATE = #{record.lastUpdate},
+      </if>
+      <if test="record.validFrom != null" >
+        VALID_FROM = #{record.validFrom},
+      </if>
+      <if test="record.validTo != null" >
+        VALID_TO = #{record.validTo},
+      </if>
+      <if test="record.deptId != null" >
+        DEPT_ID = #{record.deptId},
+      </if>
+      <if test="record.deptName != null" >
+        DEPT_NAME = #{record.deptName},
+      </if>
+      <if test="record.seqNo != null" >
+        SEQ_NO = #{record.seqNo},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update HAIBEI_LOCK.HAIBEI_LOCK_USER_T
+    set CARD_PHYID = #{record.cardPhyid},
+      LOCK_ID = #{record.lockId},
+      OPEN_TYPE = #{record.openType},
+      USER_ID = #{record.userId},
+      USER_NAME = #{record.userName},
+      LOCK_USER_ADDR = #{record.lockUserAddr},
+      LOCK_USER_STATUS = #{record.lockUserStatus},
+      LOCK_USER_MEMO = #{record.lockUserMemo},
+      LAST_UPDATE = #{record.lastUpdate},
+      VALID_FROM = #{record.validFrom},
+      VALID_TO = #{record.validTo},
+      DEPT_ID = #{record.deptId},
+      DEPT_NAME = #{record.deptName},
+      SEQ_NO = #{record.seqNo}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.haibei.pojo.lock.LockUser" >
+    update HAIBEI_LOCK.HAIBEI_LOCK_USER_T
+    <set >
+      <if test="userName != null" >
+        USER_NAME = #{userName},
+      </if>
+      <if test="lockUserAddr != null" >
+        LOCK_USER_ADDR = #{lockUserAddr},
+      </if>
+      <if test="lockUserStatus != null" >
+        LOCK_USER_STATUS = #{lockUserStatus},
+      </if>
+      <if test="lockUserMemo != null" >
+        LOCK_USER_MEMO = #{lockUserMemo},
+      </if>
+      <if test="lastUpdate != null" >
+        LAST_UPDATE = #{lastUpdate},
+      </if>
+      <if test="validFrom != null" >
+        VALID_FROM = #{validFrom},
+      </if>
+      <if test="validTo != null" >
+        VALID_TO = #{validTo},
+      </if>
+      <if test="deptId != null" >
+        DEPT_ID = #{deptId},
+      </if>
+      <if test="deptName != null" >
+        DEPT_NAME = #{deptName},
+      </if>
+      <if test="seqNo != null" >
+        SEQ_NO = #{seqNo},
+      </if>
+    </set>
+    where CARD_PHYID = #{cardPhyid}
+      and LOCK_ID = #{lockId}
+      and OPEN_TYPE = #{openType}
+      and USER_ID = #{userId}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.haibei.pojo.lock.LockUser" >
+    update HAIBEI_LOCK.HAIBEI_LOCK_USER_T
+    set USER_NAME = #{userName},
+      LOCK_USER_ADDR = #{lockUserAddr},
+      LOCK_USER_STATUS = #{lockUserStatus},
+      LOCK_USER_MEMO = #{lockUserMemo},
+      LAST_UPDATE = #{lastUpdate},
+      VALID_FROM = #{validFrom},
+      VALID_TO = #{validTo},
+      DEPT_ID = #{deptId},
+      DEPT_NAME = #{deptName},
+      SEQ_NO = #{seqNo}
+    where CARD_PHYID = #{cardPhyid}
+      and LOCK_ID = #{lockId}
+      and OPEN_TYPE = #{openType}
+      and USER_ID = #{userId}
+  </update>
+</mapper>

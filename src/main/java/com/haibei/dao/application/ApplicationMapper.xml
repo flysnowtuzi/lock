@@ -1,0 +1,397 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.haibei.dao.application.ApplicationMapper" >
+  <resultMap id="BaseResultMap" type="com.haibei.pojo.application.Application" >
+    <id column="WID" property="wid" jdbcType="DECIMAL" />
+    <result column="PROJECT_NAME" property="projectName" jdbcType="VARCHAR" />
+    <result column="PROJECT_DES" property="projectDes" jdbcType="VARCHAR" />
+    <result column="APP_ID" property="appId" jdbcType="DECIMAL" />
+    <result column="APP_URL" property="appUrl" jdbcType="VARCHAR" />
+    <result column="APP_SECRET" property="appSecret" jdbcType="VARCHAR" />
+    <result column="APP_TYPE" property="appType" jdbcType="VARCHAR" />
+    <result column="OPER_DEPT" property="operDept" jdbcType="VARCHAR" />
+    <result column="DEPT_PHONE" property="deptPhone" jdbcType="VARCHAR" />
+    <result column="IS_USEABLE" property="isUseable" jdbcType="VARCHAR" />
+    <result column="BZ" property="bz" jdbcType="VARCHAR" />
+    <result column="CREATED_BY" property="createdBy" jdbcType="VARCHAR" />
+    <result column="CREATION_TIME" property="creationTime" jdbcType="TIMESTAMP" />
+    <result column="MODIFIED_BY" property="modifiedBy" jdbcType="VARCHAR" />
+    <result column="MODIFICATION_TIME" property="modificationTime" jdbcType="TIMESTAMP" />
+    <result column="DELETE_STATUS" property="deleteStatus" jdbcType="VARCHAR" />
+    <result column="TABLE_VER" property="tableVer" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    WID, PROJECT_NAME, PROJECT_DES, APP_ID, APP_URL, APP_SECRET, APP_TYPE, OPER_DEPT, 
+    DEPT_PHONE, IS_USEABLE, BZ, CREATED_BY, CREATION_TIME, MODIFIED_BY, MODIFICATION_TIME, 
+    DELETE_STATUS, TABLE_VER
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.haibei.pojo.application.ApplicationExample" >
+    <include refid="common.Oracle_Pagination_Head" />
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from T_AMS_APPLICATION
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="common.Oracle_Pagination_Tail" />
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_AMS_APPLICATION
+    where WID = #{wid}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from T_AMS_APPLICATION
+    where WID = #{wid}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.haibei.pojo.application.ApplicationExample" >
+    delete from T_AMS_APPLICATION
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.haibei.pojo.application.Application" >
+    insert into T_AMS_APPLICATION (WID, PROJECT_NAME, PROJECT_DES, APP_ID, APP_URL, APP_SECRET, 
+      APP_TYPE, OPER_DEPT, DEPT_PHONE, IS_USEABLE, BZ, CREATED_BY, CREATION_TIME, 
+      MODIFIED_BY, MODIFICATION_TIME, DELETE_STATUS, TABLE_VER)
+    values (#{wid}, #{projectName}, #{projectDes}, #{appId}, #{appUrl}, #{appSecret}, 
+      #{appType}, #{operDept}, #{deptPhone}, #{isUseable}, #{bz}, #{createdBy}, #{creationTime}, 
+      #{modifiedBy}, #{modificationTime}, #{deleteStatus}, #{tableVer})
+  </insert>
+  <insert id="insertSelective" parameterType="com.haibei.pojo.application.Application" >
+    insert into T_AMS_APPLICATION
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="wid != null" >
+        WID,
+      </if>
+      <if test="projectName != null" >
+        PROJECT_NAME,
+      </if>
+      <if test="projectDes != null" >
+        PROJECT_DES,
+      </if>
+      <if test="appId != null" >
+        APP_ID,
+      </if>
+      <if test="appUrl != null" >
+        APP_URL,
+      </if>
+      <if test="appSecret != null" >
+        APP_SECRET,
+      </if>
+      <if test="appType != null" >
+        APP_TYPE,
+      </if>
+      <if test="operDept != null" >
+        OPER_DEPT,
+      </if>
+      <if test="deptPhone != null" >
+        DEPT_PHONE,
+      </if>
+      <if test="isUseable != null" >
+        IS_USEABLE,
+      </if>
+      <if test="bz != null" >
+        BZ,
+      </if>
+      <if test="createdBy != null" >
+        CREATED_BY,
+      </if>
+      <if test="creationTime != null" >
+        CREATION_TIME,
+      </if>
+      <if test="modifiedBy != null" >
+        MODIFIED_BY,
+      </if>
+      <if test="modificationTime != null" >
+        MODIFICATION_TIME,
+      </if>
+      <if test="deleteStatus != null" >
+        DELETE_STATUS,
+      </if>
+      <if test="tableVer != null" >
+        TABLE_VER,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="wid != null" >
+        #{wid},
+      </if>
+      <if test="projectName != null" >
+        #{projectName},
+      </if>
+      <if test="projectDes != null" >
+        #{projectDes},
+      </if>
+      <if test="appId != null" >
+        #{appId},
+      </if>
+      <if test="appUrl != null" >
+        #{appUrl},
+      </if>
+      <if test="appSecret != null" >
+        #{appSecret},
+      </if>
+      <if test="appType != null" >
+        #{appType},
+      </if>
+      <if test="operDept != null" >
+        #{operDept},
+      </if>
+      <if test="deptPhone != null" >
+        #{deptPhone},
+      </if>
+      <if test="isUseable != null" >
+        #{isUseable},
+      </if>
+      <if test="bz != null" >
+        #{bz},
+      </if>
+      <if test="createdBy != null" >
+        #{createdBy},
+      </if>
+      <if test="creationTime != null" >
+        #{creationTime},
+      </if>
+      <if test="modifiedBy != null" >
+        #{modifiedBy},
+      </if>
+      <if test="modificationTime != null" >
+        #{modificationTime},
+      </if>
+      <if test="deleteStatus != null" >
+        #{deleteStatus},
+      </if>
+      <if test="tableVer != null" >
+        #{tableVer},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.haibei.pojo.application.ApplicationExample" resultType="java.lang.Integer" >
+    select count(*) from T_AMS_APPLICATION
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update T_AMS_APPLICATION
+    <set >
+      <if test="record.wid != null" >
+        WID = #{record.wid},
+      </if>
+      <if test="record.projectName != null" >
+        PROJECT_NAME = #{record.projectName},
+      </if>
+      <if test="record.projectDes != null" >
+        PROJECT_DES = #{record.projectDes},
+      </if>
+      <if test="record.appId != null" >
+        APP_ID = #{record.appId},
+      </if>
+      <if test="record.appUrl != null" >
+        APP_URL = #{record.appUrl},
+      </if>
+      <if test="record.appSecret != null" >
+        APP_SECRET = #{record.appSecret},
+      </if>
+      <if test="record.appType != null" >
+        APP_TYPE = #{record.appType},
+      </if>
+      <if test="record.operDept != null" >
+        OPER_DEPT = #{record.operDept},
+      </if>
+      <if test="record.deptPhone != null" >
+        DEPT_PHONE = #{record.deptPhone},
+      </if>
+      <if test="record.isUseable != null" >
+        IS_USEABLE = #{record.isUseable},
+      </if>
+      <if test="record.bz != null" >
+        BZ = #{record.bz},
+      </if>
+      <if test="record.createdBy != null" >
+        CREATED_BY = #{record.createdBy},
+      </if>
+      <if test="record.creationTime != null" >
+        CREATION_TIME = #{record.creationTime},
+      </if>
+      <if test="record.modifiedBy != null" >
+        MODIFIED_BY = #{record.modifiedBy},
+      </if>
+      <if test="record.modificationTime != null" >
+        MODIFICATION_TIME = #{record.modificationTime},
+      </if>
+      <if test="record.deleteStatus != null" >
+        DELETE_STATUS = #{record.deleteStatus},
+      </if>
+      <if test="record.tableVer != null" >
+        TABLE_VER = #{record.tableVer},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update T_AMS_APPLICATION
+    set WID = #{record.wid},
+      PROJECT_NAME = #{record.projectName},
+      PROJECT_DES = #{record.projectDes},
+      APP_ID = #{record.appId},
+      APP_URL = #{record.appUrl},
+      APP_SECRET = #{record.appSecret},
+      APP_TYPE = #{record.appType},
+      OPER_DEPT = #{record.operDept},
+      DEPT_PHONE = #{record.deptPhone},
+      IS_USEABLE = #{record.isUseable},
+      BZ = #{record.bz},
+      CREATED_BY = #{record.createdBy},
+      CREATION_TIME = #{record.creationTime},
+      MODIFIED_BY = #{record.modifiedBy},
+      MODIFICATION_TIME = #{record.modificationTime},
+      DELETE_STATUS = #{record.deleteStatus},
+      TABLE_VER = #{record.tableVer}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.haibei.pojo.application.Application" >
+    update T_AMS_APPLICATION
+    <set >
+      <if test="projectName != null" >
+        PROJECT_NAME = #{projectName},
+      </if>
+      <if test="projectDes != null" >
+        PROJECT_DES = #{projectDes},
+      </if>
+      <if test="appId != null" >
+        APP_ID = #{appId},
+      </if>
+      <if test="appUrl != null" >
+        APP_URL = #{appUrl},
+      </if>
+      <if test="appSecret != null" >
+        APP_SECRET = #{appSecret},
+      </if>
+      <if test="appType != null" >
+        APP_TYPE = #{appType},
+      </if>
+      <if test="operDept != null" >
+        OPER_DEPT = #{operDept},
+      </if>
+      <if test="deptPhone != null" >
+        DEPT_PHONE = #{deptPhone},
+      </if>
+      <if test="isUseable != null" >
+        IS_USEABLE = #{isUseable},
+      </if>
+      <if test="bz != null" >
+        BZ = #{bz},
+      </if>
+      <if test="createdBy != null" >
+        CREATED_BY = #{createdBy},
+      </if>
+      <if test="creationTime != null" >
+        CREATION_TIME = #{creationTime},
+      </if>
+      <if test="modifiedBy != null" >
+        MODIFIED_BY = #{modifiedBy},
+      </if>
+      <if test="modificationTime != null" >
+        MODIFICATION_TIME = #{modificationTime},
+      </if>
+      <if test="deleteStatus != null" >
+        DELETE_STATUS = #{deleteStatus},
+      </if>
+      <if test="tableVer != null" >
+        TABLE_VER = #{tableVer},
+      </if>
+    </set>
+    where WID = #{wid}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.haibei.pojo.application.Application" >
+    update T_AMS_APPLICATION
+    set PROJECT_NAME = #{projectName},
+      PROJECT_DES = #{projectDes},
+      APP_ID = #{appId},
+      APP_URL = #{appUrl},
+      APP_SECRET = #{appSecret},
+      APP_TYPE = #{appType},
+      OPER_DEPT = #{operDept},
+      DEPT_PHONE = #{deptPhone},
+      IS_USEABLE = #{isUseable},
+      BZ = #{bz},
+      CREATED_BY = #{createdBy},
+      CREATION_TIME = #{creationTime},
+      MODIFIED_BY = #{modifiedBy},
+      MODIFICATION_TIME = #{modificationTime},
+      DELETE_STATUS = #{deleteStatus},
+      TABLE_VER = #{tableVer}
+    where WID = #{wid}
+  </update>
+</mapper>

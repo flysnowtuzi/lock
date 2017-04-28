@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.haibei.dao.lock.LogEventMapper" >
+  <resultMap id="BaseResultMap" type="com.haibei.pojo.lock.LogEvent" >
+    <id column="EVENT_ID" property="eventId" jdbcType="DECIMAL" />
+    <result column="TIMESTMP" property="timestmp" jdbcType="DECIMAL" />
+    <result column="FORMATTED_MESSAGE" property="formattedMessage" jdbcType="VARCHAR" />
+    <result column="LOGGER_NAME" property="loggerName" jdbcType="VARCHAR" />
+    <result column="LEVEL_STRING" property="levelString" jdbcType="VARCHAR" />
+    <result column="THREAD_NAME" property="threadName" jdbcType="VARCHAR" />
+    <result column="REFERENCE_FLAG" property="referenceFlag" jdbcType="DECIMAL" />
+    <result column="ARG0" property="arg0" jdbcType="VARCHAR" />
+    <result column="ARG1" property="arg1" jdbcType="VARCHAR" />
+    <result column="ARG2" property="arg2" jdbcType="VARCHAR" />
+    <result column="ARG3" property="arg3" jdbcType="VARCHAR" />
+    <result column="CALLER_FILENAME" property="callerFilename" jdbcType="VARCHAR" />
+    <result column="CALLER_CLASS" property="callerClass" jdbcType="VARCHAR" />
+    <result column="CALLER_METHOD" property="callerMethod" jdbcType="VARCHAR" />
+    <result column="CALLER_LINE" property="callerLine" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    EVENT_ID, TIMESTMP, FORMATTED_MESSAGE, LOGGER_NAME, LEVEL_STRING, THREAD_NAME, REFERENCE_FLAG, 
+    ARG0, ARG1, ARG2, ARG3, CALLER_FILENAME, CALLER_CLASS, CALLER_METHOD, CALLER_LINE
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.haibei.pojo.lock.LogEventExample" >
+    <include refid="common.Oracle_Pagination_Head" />
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from HAIBEI_LOCK.LOGGING_EVENT
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="common.Oracle_Pagination_Tail" />
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from HAIBEI_LOCK.LOGGING_EVENT
+    where EVENT_ID = #{eventId}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from HAIBEI_LOCK.LOGGING_EVENT
+    where EVENT_ID = #{eventId}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.haibei.pojo.lock.LogEventExample" >
+    delete from HAIBEI_LOCK.LOGGING_EVENT
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.haibei.pojo.lock.LogEvent" >
+    insert into HAIBEI_LOCK.LOGGING_EVENT (EVENT_ID, TIMESTMP, FORMATTED_MESSAGE, LOGGER_NAME, LEVEL_STRING, 
+      THREAD_NAME, REFERENCE_FLAG, ARG0, ARG1, ARG2, ARG3, CALLER_FILENAME, 
+      CALLER_CLASS, CALLER_METHOD, CALLER_LINE)
+    values (#{eventId}, #{timestmp}, #{formattedMessage}, #{loggerName}, #{levelString}, 
+      #{threadName}, #{referenceFlag}, #{arg0}, #{arg1}, #{arg2}, #{arg3}, #{callerFilename}, 
+      #{callerClass}, #{callerMethod}, #{callerLine})
+  </insert>
+  <insert id="insertSelective" parameterType="com.haibei.pojo.lock.LogEvent" >
+    insert into HAIBEI_LOCK.LOGGING_EVENT
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="eventId != null" >
+        EVENT_ID,
+      </if>
+      <if test="timestmp != null" >
+        TIMESTMP,
+      </if>
+      <if test="formattedMessage != null" >
+        FORMATTED_MESSAGE,
+      </if>
+      <if test="loggerName != null" >
+        LOGGER_NAME,
+      </if>
+      <if test="levelString != null" >
+        LEVEL_STRING,
+      </if>
+      <if test="threadName != null" >
+        THREAD_NAME,
+      </if>
+      <if test="referenceFlag != null" >
+        REFERENCE_FLAG,
+      </if>
+      <if test="arg0 != null" >
+        ARG0,
+      </if>
+      <if test="arg1 != null" >
+        ARG1,
+      </if>
+      <if test="arg2 != null" >
+        ARG2,
+      </if>
+      <if test="arg3 != null" >
+        ARG3,
+      </if>
+      <if test="callerFilename != null" >
+        CALLER_FILENAME,
+      </if>
+      <if test="callerClass != null" >
+        CALLER_CLASS,
+      </if>
+      <if test="callerMethod != null" >
+        CALLER_METHOD,
+      </if>
+      <if test="callerLine != null" >
+        CALLER_LINE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="eventId != null" >
+        #{eventId},
+      </if>
+      <if test="timestmp != null" >
+        #{timestmp},
+      </if>
+      <if test="formattedMessage != null" >
+        #{formattedMessage},
+      </if>
+      <if test="loggerName != null" >
+        #{loggerName},
+      </if>
+      <if test="levelString != null" >
+        #{levelString},
+      </if>
+      <if test="threadName != null" >
+        #{threadName},
+      </if>
+      <if test="referenceFlag != null" >
+        #{referenceFlag},
+      </if>
+      <if test="arg0 != null" >
+        #{arg0},
+      </if>
+      <if test="arg1 != null" >
+        #{arg1},
+      </if>
+      <if test="arg2 != null" >
+        #{arg2},
+      </if>
+      <if test="arg3 != null" >
+        #{arg3},
+      </if>
+      <if test="callerFilename != null" >
+        #{callerFilename},
+      </if>
+      <if test="callerClass != null" >
+        #{callerClass},
+      </if>
+      <if test="callerMethod != null" >
+        #{callerMethod},
+      </if>
+      <if test="callerLine != null" >
+        #{callerLine},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.haibei.pojo.lock.LogEventExample" resultType="java.lang.Integer" >
+    select count(*) from HAIBEI_LOCK.LOGGING_EVENT
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update HAIBEI_LOCK.LOGGING_EVENT
+    <set >
+      <if test="record.eventId != null" >
+        EVENT_ID = #{record.eventId},
+      </if>
+      <if test="record.timestmp != null" >
+        TIMESTMP = #{record.timestmp},
+      </if>
+      <if test="record.formattedMessage != null" >
+        FORMATTED_MESSAGE = #{record.formattedMessage},
+      </if>
+      <if test="record.loggerName != null" >
+        LOGGER_NAME = #{record.loggerName},
+      </if>
+      <if test="record.levelString != null" >
+        LEVEL_STRING = #{record.levelString},
+      </if>
+      <if test="record.threadName != null" >
+        THREAD_NAME = #{record.threadName},
+      </if>
+      <if test="record.referenceFlag != null" >
+        REFERENCE_FLAG = #{record.referenceFlag},
+      </if>
+      <if test="record.arg0 != null" >
+        ARG0 = #{record.arg0},
+      </if>
+      <if test="record.arg1 != null" >
+        ARG1 = #{record.arg1},
+      </if>
+      <if test="record.arg2 != null" >
+        ARG2 = #{record.arg2},
+      </if>
+      <if test="record.arg3 != null" >
+        ARG3 = #{record.arg3},
+      </if>
+      <if test="record.callerFilename != null" >
+        CALLER_FILENAME = #{record.callerFilename},
+      </if>
+      <if test="record.callerClass != null" >
+        CALLER_CLASS = #{record.callerClass},
+      </if>
+      <if test="record.callerMethod != null" >
+        CALLER_METHOD = #{record.callerMethod},
+      </if>
+      <if test="record.callerLine != null" >
+        CALLER_LINE = #{record.callerLine},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update HAIBEI_LOCK.LOGGING_EVENT
+    set EVENT_ID = #{record.eventId},
+      TIMESTMP = #{record.timestmp},
+      FORMATTED_MESSAGE = #{record.formattedMessage},
+      LOGGER_NAME = #{record.loggerName},
+      LEVEL_STRING = #{record.levelString},
+      THREAD_NAME = #{record.threadName},
+      REFERENCE_FLAG = #{record.referenceFlag},
+      ARG0 = #{record.arg0},
+      ARG1 = #{record.arg1},
+      ARG2 = #{record.arg2},
+      ARG3 = #{record.arg3},
+      CALLER_FILENAME = #{record.callerFilename},
+      CALLER_CLASS = #{record.callerClass},
+      CALLER_METHOD = #{record.callerMethod},
+      CALLER_LINE = #{record.callerLine}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.haibei.pojo.lock.LogEvent" >
+    update HAIBEI_LOCK.LOGGING_EVENT
+    <set >
+      <if test="timestmp != null" >
+        TIMESTMP = #{timestmp},
+      </if>
+      <if test="formattedMessage != null" >
+        FORMATTED_MESSAGE = #{formattedMessage},
+      </if>
+      <if test="loggerName != null" >
+        LOGGER_NAME = #{loggerName},
+      </if>
+      <if test="levelString != null" >
+        LEVEL_STRING = #{levelString},
+      </if>
+      <if test="threadName != null" >
+        THREAD_NAME = #{threadName},
+      </if>
+      <if test="referenceFlag != null" >
+        REFERENCE_FLAG = #{referenceFlag},
+      </if>
+      <if test="arg0 != null" >
+        ARG0 = #{arg0},
+      </if>
+      <if test="arg1 != null" >
+        ARG1 = #{arg1},
+      </if>
+      <if test="arg2 != null" >
+        ARG2 = #{arg2},
+      </if>
+      <if test="arg3 != null" >
+        ARG3 = #{arg3},
+      </if>
+      <if test="callerFilename != null" >
+        CALLER_FILENAME = #{callerFilename},
+      </if>
+      <if test="callerClass != null" >
+        CALLER_CLASS = #{callerClass},
+      </if>
+      <if test="callerMethod != null" >
+        CALLER_METHOD = #{callerMethod},
+      </if>
+      <if test="callerLine != null" >
+        CALLER_LINE = #{callerLine},
+      </if>
+    </set>
+    where EVENT_ID = #{eventId}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.haibei.pojo.lock.LogEvent" >
+    update HAIBEI_LOCK.LOGGING_EVENT
+    set TIMESTMP = #{timestmp},
+      FORMATTED_MESSAGE = #{formattedMessage},
+      LOGGER_NAME = #{loggerName},
+      LEVEL_STRING = #{levelString},
+      THREAD_NAME = #{threadName},
+      REFERENCE_FLAG = #{referenceFlag},
+      ARG0 = #{arg0},
+      ARG1 = #{arg1},
+      ARG2 = #{arg2},
+      ARG3 = #{arg3},
+      CALLER_FILENAME = #{callerFilename},
+      CALLER_CLASS = #{callerClass},
+      CALLER_METHOD = #{callerMethod},
+      CALLER_LINE = #{callerLine}
+    where EVENT_ID = #{eventId}
+  </update>
+</mapper>
